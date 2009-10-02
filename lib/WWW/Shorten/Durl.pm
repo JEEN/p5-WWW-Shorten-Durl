@@ -3,14 +3,13 @@ package WWW::Shorten::Durl;
 use strict;
 use warnings;
 use Carp;
-use URI::Escape;
 
 use base qw(WWW::Shorten::generic Exporter );
-our @EXPORT = qw( makeashorterlink makealongerlink get_capture_image );
+our @EXPORT = qw( makeashorterlink makealongerlink );
 our $VERSION = '0.01';
 
 sub makeashorterlink ($) {
-  my $url = uri_escape(shift) or croak 'No URL passed to makeashorterlink';
+  my $url = shift or croak 'No URL passed to makeashorterlink';
   my $ua = __PACKAGE__->ua();
   my $durl = "http://durl.me/api/Create.do?longurl=$url";
   my $res = $ua->get($durl);
@@ -20,8 +19,8 @@ sub makeashorterlink ($) {
 }
 
 sub makealongerlink ($) {
-  my $url = uri_escape(shift) or croak 'No URL passed to makealongerlink';
-  my ($key) = $url =~ m!http%3A%2F%2Fdurl.me%2F(\w+)!;
+  my $url = shift or croak 'No URL passed to makealongerlink';
+  my ($key) = $url =~ m!http://durl.me/(\w+)!;
   my $durl = "http://durl.me/$key.status";
   my $ua = __PACKAGE__->ua();
   my $res = $ua->get($durl);
@@ -30,11 +29,28 @@ sub makealongerlink ($) {
   return $long_url;
 }
 
-sub get_capture_image ($) {
+sub get_image ($) {
+  my $url = shift or croak 'No URL passed to get_capture_image';
 
+  unless ($url =~ m/http%3A%2F%2Fdurl.me%2F/) {
+      $url = makeashorterlink($url);
+  }
+  
+  my ($key) = $url =~ m!http://durl.me/(\w+)!;
+  return undef unless $key;
+  
+  my $ua = __PACKAGE__->ua();
+  my $res = $ua->get("http://durl.me/$key.status");
+  return undef unless $res->is_success;
+  
+  my ($image_url) = $res->content =~ m/<image-url-big><\!\[CDATA\[([^<]+)\]\]><\/image-url-big>/;
+  return $image_url;
 }
+
 1;
 __END__
+
+=encoding utf-8
 
 =head1 NAME
 
