@@ -2,8 +2,7 @@ use inc::Module::Install;
 name 'WWW-Shorten-Durl';
 all_from 'lib/WWW/Shorten/Durl.pm';
 
-# requires '';
-
+requires 'WWW::Shorten' => '2.05';
 tests 't/*.t';
 author_tests 'xt';
 

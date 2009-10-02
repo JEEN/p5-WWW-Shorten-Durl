@@ -60,11 +60,8 @@ WWW::Shorten::Durl - Perl interface to durl.me
 =head1 SYNOPSIS
 
   use WWW::Shorten::Durl;
-  use WWW::Shorten:: 'Durl';
-  
-  # .......
-  # .......
-  
+  use WWW::Shorten 'Durl';
+    
   $short_url = makeashorterlink($long_url);
   
   $long_url = makealongerlink($short_url);
