@@ -7,7 +7,7 @@ use Carp;
 
 use base qw(WWW::Shorten::generic Exporter );
 our @EXPORT = qw( makeashorterlink makealongerlink );
-our $VERSION = '0.03';
+our $VERSION = '0.04';
 
 sub makeashorterlink ($) {
   my $url = shift or croak 'No URL passed to makeashorterlink';
