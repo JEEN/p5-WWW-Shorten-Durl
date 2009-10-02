@@ -7,7 +7,7 @@ use Carp;
 
 use base qw(WWW::Shorten::generic Exporter );
 our @EXPORT = qw( makeashorterlink makealongerlink );
-our $VERSION = '0.01';
+our $VERSION = '0.02';
 
 sub makeashorterlink ($) {
   my $url = shift or croak 'No URL passed to makeashorterlink';
@@ -31,7 +31,7 @@ sub makealongerlink ($) {
 }
 
 sub get_image ($) {
-  my $url = shift or croak 'No URL passed to get_capture_image';
+  my $url = shift or croak 'No URL passed to get_image';
 
   unless ($url =~ m/http%3A%2F%2Fdurl.me%2F/) {
       $url = makeashorterlink($url);
@@ -68,6 +68,9 @@ WWW::Shorten::Durl - Perl interface to durl.me
   $short_url = makeashorterlink($long_url);
   
   $long_url = makealongerlink($short_url);
+
+  $image_url = WWW::Shorten::Durl::get_image($short_url);
+  $image_url = WWW::Shorten::Durl::get_image($long_url);
 
 =head1 DESCRIPTION
 
