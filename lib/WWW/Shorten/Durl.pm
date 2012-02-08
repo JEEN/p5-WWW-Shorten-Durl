@@ -7,7 +7,7 @@ use Carp;
 
 use base qw(WWW::Shorten::generic Exporter );
 our @EXPORT = qw( makeashorterlink makealongerlink );
-our $VERSION = '0.03';
+our $VERSION = '0.05';
 
 sub makeashorterlink ($) {
   my $url = shift or croak 'No URL passed to makeashorterlink';
@@ -75,7 +75,7 @@ WWW::Shorten::Durl is a Perl interface to the web site durl.me, Durl maintains a
 
 =head1 AUTHOR
 
-JEEN E<lt>jeen@perl.krE<gt>
+JEEN Lee E<lt>aiatejin@gmail.comE<gt>
 
 =head1 SEE ALSO
 
